@@ -1,8 +1,12 @@
 import { parseAttrSelector } from "daisyui/src/lib/postcss-prefixer/utils";
-import React from "react";
+import { Result } from "postcss";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/Usercontext";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -10,6 +14,16 @@ const Login = () => {
     const password = event.target.password.value;
 
     console.log(email, password);
+
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        event.target.reset();
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
   };
   return (
     <div>
