@@ -28,6 +28,14 @@ const Header = () => {
         >
           Home
         </Link>
+
+        <Link
+          className="btn btn-ghost lg:hiddenbtn btn-ghost normal-case text-xl"
+          to="/orders"
+        >
+          Orders
+        </Link>
+
         <Link
           className="btn btn-ghost lg:hiddenbtn btn-ghost normal-case text-xl"
           to="/login"

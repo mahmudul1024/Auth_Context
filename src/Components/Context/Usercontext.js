@@ -14,7 +14,8 @@ export const AuthContext = createContext();
 
 const auth = getAuth(app);
 const Usercontext = ({ children }) => {
-  const [user, setUser] = useState({ displayName: "Aaaksh" });
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -23,10 +24,12 @@ const Usercontext = ({ children }) => {
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
+
   // onAuthStateChanged on firebase
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (curuser) => {
       setUser(curuser);
+      setLoading(false);
       console.log("auth state changed", curuser);
     });
     return () => {
@@ -48,7 +51,7 @@ const Usercontext = ({ children }) => {
     return signOut(auth);
   };
 
-  const authInfo = { user, createUser, signIn, logOut, signInGoogle };
+  const authInfo = { loading, user, createUser, signIn, logOut, signInGoogle };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
